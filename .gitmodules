@@ -1,0 +1,6 @@
+[submodule "ML-assignments-coursera-andrew-ng-python"]
+	path = ML-assignments-coursera-andrew-ng-python
+	url = https://github.com/Rama4/ML-assignments-coursera-andrew-ng-python
+[submodule "Machine-Learning-Andrew-Ng"]
+	path = Machine-Learning-Andrew-Ng
+	url = https://github.com/Rama4/Machine-Learning-Andrew-Ng
