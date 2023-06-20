@@ -1,0 +1,420 @@
+Lessons:
+
+Try to convert whatever mathematical expression into matrices/vectors and its operations.
+why: because matrix operations are efficient due to libraries like numpy.
+In practice, especially for small training sets, when you plot learning curves to debug your algorithms, 
+
+it is often helpful to average across multiple sets of randomly selected examples to determine the training error and cross validation error.
+
+Concretely, to determine the training error and cross validation error for  𝑖  examples,
+	you should first randomly select  𝑖  examples from the training set and  𝑖 examples from the cross validation set.
+You will then learn the parameters  𝜃  using the randomly chosen training set
+	and evaluate the parameters  𝜃  on the randomly chosen training set and cross validation set.
+The above steps should then be repeated multiple times (say 50)
+	and the averaged error should be used to determine the training error and cross validation error for  𝑖  examples.
+	
+
+Principal Component Analysis:
+-----------------------------
+PCA is a linear transformation that finds the "principal components", or directions of greatest variance, in a data set.
+It can be used for dimension reduction among other things.
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------
+week 2:
+-------
+conect bio to math
+input layer, one or more hidden layers (intermediate layers) and output layer
+weights and biases
+activation / sigmoid / logistic function
+
+diagram and formula
+explain notation in detail, especially theta (dimensions)
+
+
+define z and a
+let x = a(1)
+sub in equation
+
+add bias a0(j) = 1
+inputs are matrices, vectors and scalars, but ultimate output will be a number h(x) only
+intermediate layers vecchi we can produce more complex non-linear hypothesis
+
+achieve the functionality of OR, NOT and XOR by using neural networks:
+
+simple boolean operations => one intermediate layer is enough
+we know that g(z) , i.e sigmoid function will be :
+
+	g(z) -> 1 for z >= 4.6 and
+	g(z) -> 0 for z <= -4.6
+
+here, z takes the form: b + w1x1 + w2x2, also x1 and x2 are boolean values
+so, choose b,w1,w2 such that z will be >= 4.6 (so g(z) = 1) or z will be <= -4.6 (so g(z) = 0)
+
+example: 
+
+for OR function, we have:
+b = -10, w1 = +20, w2 = +20
+
+so, if x1 and x2 = 0, we get g(z) = g(-10) = 0
+otherwise, for other combinations, we get g(z) = 1
+so OR gate function is achieved.
+
+multiple layer example: 
+lets implement xnor gate with more than 1 hidden layer:
+
+xnor => either both are 0 , or both are 1.
+=> or of both 0 case and both 1 case.
+
+
+One effective strategy for choosing  𝜖𝑖𝑛𝑖𝑡  is to base it on the number of units in the network.
+A good choice of  𝜖𝑖𝑛𝑖𝑡  is  𝜖𝑖𝑛𝑖𝑡=6 / √𝐿𝑖𝑛+𝐿𝑜𝑢𝑡√  where  𝐿𝑖𝑛=𝑠𝑙 and  𝐿𝑜𝑢𝑡=𝑠𝑙+1  are the number of units in the layers adjacent to  Θ
+
+_______________________________________________________________________________________________________________________
+Activation functions:|
+_____________________|
+
+
+logistic sigmoid function:
+	advantage:
+		continuous function, having output btwn 0-1
+	disadvantage:
+		The logistic sigmoid function can cause a neural network to get stuck at the training time.
+		The gradients are between 0 and 1, so if your network is deep, the gradient at the end (loss function) 
+			would be multiplied along the layers(chain rule) and when this reaches a farther layer from output,
+			the gradients won't be high at all(multiplication of lot of numbers between 0 and 1)
+
+tanh:
+	tanh is also like logistic sigmoid but BETTER.
+	The range of the tanh function is from (-1 to 1). tanh is also sigmoidal (s - shaped).
+
+	Advantages:
+		Both functions are differentiable and monotonic while its derivatives are not monotonic.
+		Both tanh and logistic sigmoid activation functions are used in feed-forward NNs.
+	Disadvantages:
+		sigmoid function is a SLOW learner. Instead, use Rectified Linear Unit(ReLU).
+		
+ReLU:
+	ReLU(a) = max(0,a), where a : activation
+	Advantage:
+		More accurately models the behaviour of real neurons.
+		The function and its derivative both are monotonic.
+	Disadvantage:
+		All the negative values become zero immediately which decreases the ability of the model to fit or train from the data properly.
+		That means any negative input given to the ReLU activation function turns the value into zero immediately in the graph,
+			which in turns affects the resulting graph by not mapping the negative values appropriately.
+		So we use Leaky ReLU instead.
+
+Leaky ReLU:
+	ReLU, but with very slight slope in the -x direction (leak duh!).
+	i.e f(x) = ax, when x<0 (a ~ 0.01), f(x) = x when x>=0
+	When a is not 0.01 then it is called Randomized ReLU.
+	The function and its derivative both are monotonic.
+
+SEE https://towardsdatascience.com/activation-functions-neural-networks-1cbd9f8d91d6 for more details.
+
+Multiclass classification:
+
+	The softmax function is a more generalized logistic activation function which is used for multiclass classification.
+	but it is only suited for multiclass single label application, because the sum of probablilties of all classes are 1.
+	whereas sigmoid is suited fro multiclass multi-label application., because for individual output class, its output can be btwn 0-1.
+	what is multiclass multi-label ?
+		in a simgle picture, more than one class is present (ex. more than 1 digit in a picture)
+
+	To do so, we make the hypothesis function return a vector of values, instead of a single value.
+	explain the transport example
+
+
+Choosing an Activation Function:
+--------------------------------
+In a NN:
+	the activation functions used in the intermediate layers are either ReLU or Leaky ReLU
+	the activation function used in the last layer is either sigmoid / tanh / softmax, depending on the range and type of output that you want.
+
+TLDR: “What neuron type should I use?”
+	Use the ReLU non-linearity, be careful with your learning rates and possibly monitor the fraction of “dead” units in a network.
+	If this concerns you, give Leaky ReLU or Maxout a try. Never use sigmoid. Try tanh, but expect it to work worse than ReLU/Maxout.
+
+
+-----------------------------------------------------------------------------
+NOTE: 0TX means (theta transpose) * X = theta1 x1 + theta2 x2 + ... thetan xn
+			X -> vector ->  [
+								x1
+								x2
+								...
+								xn
+							]
+
+-----------------------------------------------------------------------------
+
+
+week 7:
+-------
+
+SVM: Support Vector Machines:
+------------------------------
+
+svm -> another learning algo alternative to Logistic Regression and Neural Networks
+	-> compared to above algos, this one is sometimes cleaner and sometimes more powerful way of learning complex non-linear functions.
+	
+mathematical definition:
+
+we use the following hypothesis function:
+
+	h0(x) =  1 if 0Tx >= 0
+	h0(x) =  0 otherwise
+	
+instead of the  1 / ( 1 +  e^-0Tx ) function that we used in Logistic Regression.
+
+Logistic Regression gives you probablilty, whereas SVM just predicts the outcome directly (like a 'yes' or 'no' question)
+
+cost function:
+
+	logistic regression has the following structure for J :
+		
+			A + LB  (L = Lambda)
+			
+	so that we control (regularize) the weights given to A and B by controlling L value.
+	if L is big, then B will be given more weightage in cost function.
+	
+	
+	In SVM: J takes the following format:
+			
+			CA + B
+	
+	so weightage is controlled by varying C.
+	if we make C = 1/L , then the same value of 0 (theta) will give min value..
+	
+Geometrically speaking:
+
+	If y = 1, ( i.e we want 0Tx >> 0  , or z >> 0  ): 
+		
+	the cost function curve will be like:
+		
+		cost = 3 when z = -3
+		cost -> 0 when z >> 0 (i.e  z -> inf)
+		
+	svm's cost function curve will be like 2 straight lines:
+	
+		one straight line:
+			cost ~ 3 @ z = -3 , until cost = 0 @ z = 1
+		another straight line :
+			cost = 0  from  z = 1 till inf
+		
+	If y = 0:
+		
+		svm: just take reflection of the above curve about y axis (cost axis)
+	
+	
+	So, in conclusion:
+	
+		Logistic Regression:
+			
+				if y = 1, we want z = 0Tx >> 0
+				if y = 0, we want z = 0Tx << 0
+				
+		SVM:
+			
+				if y = 1, we want z = 0Tx >= 1
+				if y = 0, we want z = 0Tx <= -1
+	
+				
+	SVM is sometimes called as a Large Margin Classifier.
+	
+	what is a Large Margin Classifier:
+	
+		A classifier that gives a good margin between the 2 classes of data.
+		i.e the decision boundary leaves a gap between the 2 classes of data.
+		
+		This also solves 2 problems:
+			1. outliers don't affect the decision boundary.
+				this is possible provieded C is not too large.
+			
+			2. If the data is not Linearly Seperable (i.e cannot be seperated by a straght line), decision boundary is the same.
+				if we have few opposite class data in one side, then it may not be linearly seperable.
+				this is possible provieded C is not too large.
+				
+		If C is very large, then it does not have a large margin, on both sides.
+		So we have to keep C at a medium large number.
+		
+Gaussian kernel:
+----------------
+To find non-linear decision boundaries with the SVM, we need to first implement a Gaussian kernel. 
+You can think of the Gaussian kernel as a similarity function that measures the “distance” between a pair of examples, ( 𝑥(𝑖) ,  𝑥(𝑗) ).
+The Gaussian kernel is also parameterized by a bandwidth parameter,  𝜎 , which determines how fast the similarity metric decreases (to 0)
+as the examples are further apart. 
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+_______________________________________________________________________________________________________________________
+CODE:|
+_____|
+
+
+Debugging guide:
+
+
+	Python array indices start from zero, not one (contrary to OCTAVE/MATLAB).
+
+	There is an important distinction between python arrays (called list or tuple) and numpy arrays. 
+	You should use numpy arrays in all your computations. Vector/matrix operations work only with numpy arrays. 
+	Python lists do not support vector operations (you need to use for loops).
+
+	If you are seeing many errors at runtime, inspect your matrix operations to make sure that you are adding and multiplying matrices of compatible dimensions.
+	Printing the dimensions of numpy arrays using the shape property will help you debug.
+
+	By default, numpy interprets math operators to be element-wise operators. If you want to do matrix multiplication, you need to use the dot function in numpy.
+	For, example if A and B are two numpy matrices, then the matrix operation AB is np.dot(A, B).
+
+Matrices and Vectors:
+
+	matrix: row and columns
+	vector: only rows
+
+	examples:
+	y : The values of the function at each data point. This is a vector of shape (m, ).
+	X : The input dataset of shape (m x n+1), where m is the number of examples,
+			and n is the number of features. We assume a vector of one's already 
+			appended to the features so we have n+1 columns.
+			
+	shape property gives the dimensions of the matrix.
+		ex: X.shape -> [2,3]  and X.shape[0] = 2
+	size property gives no.of elements of the vector.
+	
+	The following is still considered a matrix np.array([[1, 2, 3]]) 
+	since it has two dimensions, even if it has a shape of 1x3 (which looks like a vector).
+	
+	A vector can be promoted to a matrix using y[None] or y[np.newaxis].
+	That is, if y = np.array([1, 2, 3]) is a vector of size 3, then  y[None, :] is a matrix of shape  1x3.
+	We can use y[:, None] to obtain a shape of  3x1 .
+
+	dot() function:
+	
+		It always performs inner products on vectors. If x=np.array([1, 2, 3]), then np.dot(x, x) is a scalar.
+		For matrix-vector multiplication, so if X is a mxn matrix and y is a vector of length m,
+		then the operation np.dot(y, X) considers y as a 1xm vector.
+		On the other hand, if y is a vector of length n, then the operation np.dot(X, y) considers y as a nx1 vector.
+
+	np.dot() is the dot product of two matrices.
+
+	|A B| . |E F| = |A*E+B*G A*F+B*H|
+	|C D|   |G H|   |C*E+D*G C*F+D*H|
+
+	Whereas np.multiply() does an element-wise multiplication of two matrices.
+
+	|A B| ⊙ |E F| = |A*E B*F|
+	|C D|   |G H|   |C*G D*H|
+	
+	
+	Add a column of ones to X:
+		stack() joins arrays along a given axis. 
+		The first axis (axis=0) refers to rows (training examples) 
+		The second axis (axis=1) refers to columns (features).
+		ex: X = np.stack([np.ones(m), X], axis=1)
+
+
+	@ operator : matrix multiplication operator
+	
+	np.all() : Test whether all array elements along a given axis evaluate to True.
+		ex: np.all(variable_a == variable_b)
+		
+	in a numpy array, Row => axis = 0  and column => axis = 1
+	so, row_sum = np.sum(X, axis = 0) and column_sum = np.sum(X, axis  = 1)
+	
+	argmax(): you can use np.argmax(A, axis=1) to obtain the index of the max elem for each row.
+	
+	
+scipy.optimize.minimize()
+------------------------
+							Automatically finds the best parameters theta, for a given cost function and fixed dataset (of X and y values). 
+	ex:
+	-----------------------------------------------------
+	options= {'maxiter': 400}
+	
+	res = optimize.minimize(costFunction,
+							initial_theta,
+							(X, y, lambda_),
+							jac=True,
+							method='TNC',
+							options=options)
+
+	# the fun property of `OptimizeResult` object returns
+	# the value of costFunction at optimized theta
+	cost = res.fun
+
+	# the optimized theta is in the x property
+	theta = res.x
+	-----------------------------------------------------
+	Here:
+		costFunction: name of your cost function
+		jac: Indication if the cost function returns the Jacobian (gradient) along with cost value. (True)
+		lambda_: regularization parameter
+		method: Optimization method/algorithm to use
+					here, it uses "TNC" :  truncated Newton algorithm, for optimization which is equivalent to MATLAB's fminunc
+		
+-----------------------------------------------------------------------------------------------------------------------
+one-hot encoding :
+------------------
+
+	Puts 1 in the required row as specified, and leaves the remaining as 0
+
+example:
+	-----------------------------------------------------
+	y = [1,2,3]
+	y = to_categorical(y, num_labels)
+	-----------------------------------------------------
+	now y will be:
+	[
+		[0 0 0],
+		[1 0 0],
+		[0 1 0],
+		[0 0 1]
+	]
+	
+	#===============================================================================
+	function code:
+	#===============================================================================
+	def to_categorical(y, num_classes=None, dtype='float32'):
+	  """Converts a class vector (integers) to binary class matrix.
+	  E.g. for use with categorical_crossentropy.
+	  Arguments:
+		  y: class vector to be converted into a matrix
+			  (integers from 0 to num_classes).
+		  num_classes: total number of classes.
+		  dtype: The data type expected by the input. Default: `'float32'`.
+	  Returns:
+		  A binary matrix representation of the input. The classes axis is placed
+		  last.
+	  """
+	  y = np.array(y, dtype='int')
+	  input_shape = y.shape
+	  if input_shape and input_shape[-1] == 1 and len(input_shape) > 1:
+		input_shape = tuple(input_shape[:-1])
+	  y = y.ravel()
+	  if not num_classes:
+		num_classes = np.max(y) + 1
+	  n = y.shape[0]
+	  categorical = np.zeros((n, num_classes), dtype=dtype)
+	  categorical[np.arange(n), y] = 1
+	  output_shape = input_shape + (num_classes,)
+	  categorical = np.reshape(categorical, output_shape)
+	  return categorical
+	#===============================================================================
+	
+-----------------------------------------------------------------------------------------------------------------------
+genrate array of random values:
+
+import numpy as np
+a = np.empty((3,10))
+for i in range(3):
+    a[i] = (np.random.permutation(300)[:10])
+a = a.astype(int)
+
+
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+
+		
+		
+		

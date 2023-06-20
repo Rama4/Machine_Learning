@@ -4,3 +4,6 @@
 [submodule "Machine-Learning-Andrew-Ng"]
 	path = Machine-Learning-Andrew-Ng
 	url = https://github.com/Rama4/Machine-Learning-Andrew-Ng
+[submodule "ml_course_stanford"]
+	path = ml_course_stanford
+	url = https://github.com/Rama4/ml_course_stanford
