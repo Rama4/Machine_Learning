@@ -173,7 +173,7 @@ cost function:
 	logistic regression has the following structure for J :
 		
 			A + LB  (L = Lambda)
-			
+				
 	so that we control (regularize) the weights given to A and B by controlling L value.
 	if L is big, then B will be given more weightage in cost function.
 	
